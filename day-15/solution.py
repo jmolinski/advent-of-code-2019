@@ -1,7 +1,5 @@
-from collections import Counter
-from typing import Dict, List, Set, Tuple
 import math
-from decimal import Decimal
+from typing import Dict, List, Tuple
 
 
 def required_ore(
@@ -14,7 +12,7 @@ def required_ore(
         required_amount = required.pop(next_required)
 
         amount, required_ingredients = ingredients[next_required]
-        multiplier = math.ceil(Decimal(required_amount) / Decimal(amount))
+        multiplier = math.ceil(required_amount / amount)
 
         for ing_amount, ingredient in required_ingredients:
             amnt = ing_amount * multiplier
@@ -28,7 +26,7 @@ def required_ore(
             if amnt:
                 required[ingredient] = amnt + required.get(ingredient, 0)
 
-        if (left_over := amount * multiplier - required_amount):
+        if (left_over := amount * multiplier - required_amount) :
             stock[next_required] = left_over + stock.get(next_required, 0)
 
     return required["ORE"]
